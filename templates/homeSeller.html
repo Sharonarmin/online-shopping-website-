@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="brand_color">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="titlepage">
+                        <h2>Latest Orders</h2>
+                    </div>
+                </div>
+            </div>
+	</div>
+</div>
+
+
+			<div class="product-bg">
+         		<div class="product-bg-white">
+			<div class="container">
+			<div class="row">
+				{% for i in data %}
+					<div class="col-xl-3 col-lg-3 col-md-6 col-sm-12">
+                  			<div class="product-box">
+					<span>Product</span>
+					<h3>{{i.product.product}}</h3>
+					<span>Address</span>
+					<h3>{{i.address}}</h3>
+					<span>Contact</span>
+					<h3>{{i.contact}}</h3>
+					<span>Quantity</span>
+					<h3>{{i.quantity}}</h3>
+					<span>Total</span>
+					<h3>{{i.total}}</h3>
+					<span>Status</span>
+					<h3>{{i.status}}</h3>
+					{% if i.status == 'none' %}
+						<h3><a class="send" href={% url 'approveOrder' i.id %}>Approve</a></h3>
+						<h3><a class="send" href={% url 'denyOrder' i.id %}>Deny</a></h3>
+					{% endif %}
+					{% if i.status == 'Canceled' %}
+						<h3><a class="send" href={% url 'cancelVerification' i.id %}>verify cancel</a></h3>
+					{% endif %}
+					{% if i.status == 'approved' %}
+						<h3 class="send" ><a href={% url 'trackingDetailsPage' i.id %}>Tracking Details</a></h3>
+					{% endif %}
+					</div>
+					</div>
+				{% endfor %}
+			</div>
+			</div>
+			</div>
+			</div>
+		
+		
+
+		{% if msg %}
+				<script>alert('{{msg}}')</script>
+		{% endif %}
+		
+
+{% endblock %}

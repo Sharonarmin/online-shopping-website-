@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+
+<div class="contact">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+		<form method="post" action="{% url 'updateAction' %}" enctype="multipart/form-data">
+		{% csrf_token %}
+		{% for i in data %}
+				
+					<input type="hidden" name="uid" id="uid" value="{{i.id}}"/>
+			<div class="row">
+                        	<div class=" col-md-12 ">
+					<img src="{{i.file.url}}" height="100px" width="100px" alt="no pic"/>
+                                	<input class="form-control"  type="file" name="fileUpdate" id="fileUpdate">
+				</div>
+				<div class=" col-md-12 ">
+					Product
+					<input class="form-control" type="text" id="product" name="product" value="{{i.product}}"/>
+				</div>
+				<div class="col-md-12">
+					Details
+					<input class="form-control" type="text" id="detals" name="details" value="{{i.details}}"/>
+				</div>
+				<div class="col-md-12">
+					catagory
+						<select name="catagory" id="catagory">
+						<option value="{{i.catagory_id}}">{{i.catagory.catagory}}</option>
+						{% for c in catagory %}
+							<option value="{{c.id}}">{{c.catagory}}</option>
+						{% endfor %}
+				</div>
+				<div class="col-md-12">
+					Stock
+					<input class="form-control" type="text" id="stock" name="stock" value="{{i.stock}}"/>			
+				</div>
+				<div class="col-md-12">
+					Price
+					<input class="form-control" type="text" id="price" name="price" value="{{i.price}}"/>
+				</div>
+				<div class="col-md-12">
+					<button class="send">submit</button>
+				</div>
+			</div>
+		{% endfor %}
+		</form>
+		</div>
+	     </div>
+	</div>
+</div>
+{% if msg %}
+	<script>alert('{{msg}}')</script>
+{% endif %}
+{% endblock %}
+			

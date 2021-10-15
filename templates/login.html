@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<script type="text/javascript">
+		function validation()
+		{
+			var alpha=/^[a-zA-Z]+$/;
+			var psw=/^[a-zA-Z0-9]+$/;
+
+			var username=document.getElementById("username");
+			var password=document.getElementById("password");
+		
+			if (username.value.length == 0)
+			{
+				alert("Enter the username");
+				username.focus();
+				return false;
+			}
+			else if(password.value.length == 0)
+			{
+				alert("Enter the password");
+				password.focus();
+				return false;
+			}
+			else
+			{
+				return true;
+			}
+		}
+</script>
+
+<div class="contact">
+	<div class="container">
+		<div class="row">
+                <div class="col-md-12">
+		<form class="main_form" method="post" action="{% url 'loginAction' %}">
+		{% csrf_token %}
+
+			<div class="row">
+                            <div class=" col-md-12 ">
+                                <input class="form-control" placeholder="username" type="text" name="username" id="username">
+                            </div>
+                            <div class=" col-md-12">
+                                <input class="form-control" placeholder="password" type="password" name="password" id="password">
+                            </div>
+                            <div class=" col-md-12">
+                                <button  class="send" onclick="return validation()">Submit</button>
+                            </div>
+			    <div class=" col-md-12">
+				<a href={% url 'forgotPassword' %}>Forgot Password</a>
+			    </div>
+                        </div>
+			
+		
+		</div>
+		</div>
+	</div>
+</div>
+
+
+{% if msg %}
+	<script>alert('{{msg}}')</script>
+{% endif %}
+{% endblock %}

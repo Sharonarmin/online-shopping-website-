@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<script type="text/javascript">
+	function validation()
+		{
+			var alpha=/^[a-zA-Z-0-9]+$/;
+			
+			var catagory=document.getElementById("catagory");
+			
+			if (catagory.value.length == 0)
+			{
+				alert("Enter the catagory");
+				catagory.focus();
+				return false;
+			}
+			else
+			{
+				return true;
+			}
+		}
+</script>
+
+<div class="product-bg">
+	<div class="product-bg-white">
+		<div class="container">
+			<div class="row">
+				<form method="post" action="{% url 'catagoryAction' %}">
+				{% csrf_token %}
+					<h3>Enter the catagory</h3>
+					<h3><input type="text" id="catagory" name="catagory"/></h3>
+				
+					<br>
+					<button class="send" onclick="return validation()" >Submit</button>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+{% if msg %}
+	<script>alert('{{msg}}')</script>
+{% endif %}
+{% endblock %}

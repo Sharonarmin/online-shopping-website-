@@ -1,0 +1,184 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+
+<script type="text/javascript">
+		function validation()
+		{
+			var alpha=/^[a-zA-Z]+$/;
+			var num=/^[0-9]+$/;
+			var psw=/^[a-zA-Z0-9]+$/;
+			var name=document.getElementById("name");
+			var address=document.getElementById("address");
+			var mgender=document.getElementById("mgender");
+			var fgender=document.getElementById("fgender");
+			var country=document.getElementById("country");
+			var phone=document.getElementById("phone");
+			var username=document.getElementById("username");
+			var password=document.getElementById("password");
+			var confirmPassword=document.getElementById("confirmPassword");
+
+			
+			if (name.value.length == 0)
+			{
+				alert("Enter your name");
+				name.focus();
+				return false;
+			}
+			else if(!name.value.match(alpha))
+			{
+				alert("invalid name");
+				name.focus();
+				return false;
+			}
+			
+			else if (address.value.length == 0)
+			{
+				alert("Enter your address");
+				address.focus();
+				return false;
+			}
+			else if(!address.value.match(alpha))
+			{
+				alert("Invalid address");
+				address.focus();
+				return false;
+			}
+			
+			else if (mgender.checked == false && fgender.checked == false)
+			{
+				alert("Please select gender");
+				return false;
+			}
+			else if(phone.value.length == 0)
+			{
+				alert("Enter the phone number");
+				phone.focus();
+				return false;
+			}
+			else if(!phone.value.match(num))
+			{
+				alert("Invalid phone number");
+				phone.focus();
+				return false;
+			}
+			else if(username.value.length == 0)
+			{	
+				alert("Enter the username");
+				username.focus();
+				return false;
+			}
+			else if(!username.value.match(alpha))
+			{
+				alert("Invalid username");
+				username.focus();
+				return false;
+			}
+			else if(password.value.length == 0)
+			{
+				alert("Enter the password");
+				password.focus();
+				return false;
+				
+			}
+			else if(!password.value.match(psw))
+			{
+				alert("Invalid password");
+				password.focus();
+				return false;
+			}
+			else if(country.value.length == 0)
+			{
+				alert("Select the Country");
+				return false;
+			}
+			else if(confirmPassword.value != password.value)
+			{
+				alert("password mismatch");
+				confirmPassword.focus();
+				return false;
+			}
+			else
+			{
+				return true;
+			}
+		}
+
+</script>
+
+	
+				
+			
+
+<div class="contact">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+
+		<form method="post" action="{% url 'registerAction1' %}" class="main_form">
+		{% csrf_token %}
+		
+			<div class="row">
+                        	<div class=" col-md-12 ">
+                                	<input class="form-control" placeholder="Name" type="text" name='name' id='name'>
+				</div>
+                            	<div class=" col-md-12 ">
+                                	<input class="textarea" placeholder="Address" type="text" name="address" id="address">
+				</div>
+				<div><h5>Gender</h5></div>
+				<div class= " col-md-12 ">
+					<input type="radio" name="gender" id="mgender" value="male"/>male
+					<input type="radio" name="gender" id="fgender" value="female"/>female
+				</div>
+				<br>
+				<div  class= " col-md-12 ">
+				<div class="country">
+				Country	<select name="country" id="country" class="form-control" style="height:50px" >
+						<option value="">--select--</optoin>
+						<option value="india">India</option>
+						<option value="china">China</option>
+						<option value="america">America</option>
+					</select>
+				</div>
+					
+				</div>
+				<br>
+				<div class= "col-md-12">
+				<input class="form-control" placeholder="Phone" name="phone" id="phone"/>
+				</div>
+				<br>
+				<div class="col-md-12">
+				<input class="form-control" placeholder="username" name="username" id="username">
+				</div>
+				<br>
+					
+				<div class= " col-md-12 ">
+				<input class="form-control" placeholder="password" name="password"  type="password" id="password"/>
+				</div>
+				<br>
+
+				<div class= " col-md-12 ">
+				<input  type="text" class="form-control" placeholder="Confirm password" name="confirmPassword" type="password" id="confirmPassword"/>
+				</div>
+				<br>
+				
+
+				<div class= " col-md-12 ">
+					<button class="send" onclick="return validation()">Submit</button>
+				</div>
+			</div>
+		
+			
+		</form>
+
+
+		</div>
+           </div>
+       </div>
+   </div>
+{% if msg %}
+	<script>alert('{{msg}}');</script>
+{% endif %}
+		
+{% endblock %}

@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% block content %}
+
+
+<div class="Lastestnews blog">
+        <div class="container">
+		
+		<form method="post" action="{% url 'cartAction' %}">
+		{% csrf_token %}
+			{% for i in data %}
+				<div class="row">
+                		<div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 margin">
+                    		<div class="news-box">
+				<h3>{{i.product.product}}</h3>
+                      	<h3>{{i.address}}</h3>
+				<h3>{{i.contact}}</h3>
+				<h3>{{i.quantity}}</h3>
+				<h3>{{i.total}}</h3>
+				<h3 class="send" ><a href={% url 'deleteCart' i.id %}>Delete</a></h3>
+				<h3 class="send"><input type="checkbox" value="{{i.id}}" name="cartProducts"></h3>
+				<input type="submit" class="send" value="confirm" >
+				</div>
+				</div>
+				</div>
+			{% endfor %}
+			
+	</div>
+</div>
+
+		</form>
+
+
+{% endblock %}

@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% block content %}
+	<div class="brand_color">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="titlepage">
+                        <h2>Latest product</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+	</div>
+		
+			<div class="product-bg">
+         		<div class="product-bg-white">
+			<div class="container">
+			<div class="row">
+			{% for i in data %}
+					<div class="col-xl-3 col-lg-3 col-md-6 col-sm-12">
+					<div class="product-box">
+                     			<i><img src="/MEDIA/{{i.file}}"/></i>
+                    		 	<h3>{{i.product}}</h3>
+                     			<span>{{i.price}}</span>
+					<h3><a class="send" href={% url 'add_to_cart' i.id %}>Add to cart</a></h3>
+                 			</div>
+               				</div>
+			{% endfor %}
+			</div>
+			</div>
+			</div>
+			</div>
+		
+
+		{% if msg %}
+				<script>alert('{{msg}}')</script>
+		{% endif %}
+
+{% endblock %}

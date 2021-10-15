@@ -1,0 +1,171 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+
+
+
+<script type="text/javascript">
+		function validation()
+		{
+			var alpha=/^[a-zA-Z]+$/;
+			var num=/^[0-9]+$/;
+			var psw=/^[a-zA-Z-0-9]+$/;
+			
+			var name=document.getElementById("name");
+			var address=document.getElementById("address");
+			var mgender=document.getElementById("mgender");
+			var fgender=document.getElementById("fgender");
+			var country=document.getElementById("country");
+			var phone=document.getElementById("phone");
+			var username=document.getElementById("username");
+			var password=document.getElementById("password");
+			
+			if (mgender.checked == false && fgender.checked == false)
+			{
+				alert("Please select gender");
+				return false;
+			}
+			if (name.value.length == 0)
+			{
+				alert("Enter your name");
+				name.focus();
+				return false;
+			}
+			else if(!name.value.match(alpha))
+			{
+				alert("invalid name");
+				name.focus();
+				return false;
+			}
+			
+			else if (address.value.length == 0)
+			{
+				alert("Enter your address");
+				address.focus();
+				return false;
+			}
+			else if(!address.value.match(alpha))
+			{
+				alert("Invalid address");
+				address.focus();
+				return false;
+			}
+			else if(phone.value.length == 0)
+			{
+				alert("Enter the phone number");
+				phone.focus();
+				return false;
+			}
+			else if(!phone.value.match(num))
+			{
+				alert("Invalid phone number");
+				phone.focus();
+				return false;
+			}
+			else if(username.value.length == 0)
+			{	
+				alert("Enter the username");
+				username.focus();
+				return false;
+			}
+			else if(!username.value.match(alpha))
+			{
+				alert("Invalid username");
+				username.focus();
+				return false;
+			}
+			else if(password.value.length == 0)
+			{
+				alert("Enter the password");
+				password.focus();
+				return false;
+				
+			}
+			else if(!password.value.match(psw))
+			{
+				alert("Invalid password");
+				password.focus();
+				return false;
+			}
+			else if(country.value.length == 0)
+			{
+				alert("Select the Country");
+				return false;
+			}
+			else
+			{
+				return true;
+			}
+		}
+</script>
+
+<div class="contact">
+	<div class="container">
+		<div class="row">
+                <div class="col-md-12">
+		<form method="post" action="{% url 'updateSellerProfileAction' %}">
+		{% csrf_token %}
+		{% for i in data %}
+			<input type="hidden" name="uid" value="{{i.id}}" id="uid">
+
+		<div class="row">
+                	<div class=" col-md-12 ">
+                                <input class="form-control" value="{{i.name}}" type="text" name='name' id='name'>
+			</div>
+			
+	
+			<div><h5>Gender</h5></div>
+			<div class= " col-md-12 ">
+				{% ifequal i.gender 'male' %}
+					<input type="radio" name="gender" id="mgender" value="male" checked="true"/>Male
+					<input type="radio" name="gender" id="fgender" value="female"/>Female</td>
+				{% else %}
+					<input type="radio" name="gender" id="mgender" values="male"/>male
+					<input type="radio" name="gender" id="fgender" values="female" checked="true"/>Female</td>
+				{% endifequal %}
+					
+			</div>
+			<div class=" col-md-12 ">
+                                <textarea class="textarea"  type="text" name="address" id="address" >{{i.address}}</textarea>
+			</div>
+					
+			<div  class= " col-md-12 ">
+			<div class="country">
+				Country	<select name="country" id="country" class="form-control" style="height:50px" >
+						<option value="{{i.country}}">{{i.country}}</optoin>
+						<option value="india">India</option>
+						<option value="china">China</option>
+						<option value="america">America</option>
+					</select>
+			</div>		
+			</div>
+			<br>
+			<div class= "col-md-12">
+				<input class="form-control" value="{{i.phone}}" name="phone" id="phone"/>
+			</div>
+			<br>
+			<div class="col-md-12">
+				<input class="form-control" value="{{i.username}}" name="username"  id="username" type="text">
+			</div>
+			<br>
+			<div class="col-md-12">
+				<input  class="form-control" type="password" id="password" name="password" value="{{i.password}}"/>
+			</div>	
+			<div class= " col-md-12 ">
+				<button class="send" onclick="return validation()" >Update</button>
+			</div>
+		</div>
+			
+			
+		{% endfor %}
+		</form>
+
+		</div>
+		</div>
+	</div>
+</div>
+{% if msg %}
+	<script>alert('{{msg}}');</script>
+{% endif %}
+{% endblock %}

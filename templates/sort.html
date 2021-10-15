@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<script type="text/javascript">
+		function validation()
+		{
+			var alpha=/^[a-z-A-Z]+$/;
+			var num=/^[0-9]+$/;
+
+			var catagory=document.getElementById("sort");
+			var amount=document.getElementById('price');
+
+			if (catagory.value.length ==0)
+			{
+				alert("Select the catagory");
+				catagory.focus();
+				return false;
+			}
+			else if(amount.value.length == 0)
+			{
+				alert("Enter the amount");
+				amount.focus();
+				return false;
+			}
+			else if(!amount.value.match(num))
+			{
+				alert("Wrong entry");
+				amount.focus();
+				return false;
+			}
+			else
+			{
+				return true;
+			}
+		}
+</script>
+	
+
+
+
+
+<div class="contact">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+
+			<form action="{% url 'sortAction' %}">
+			{% csrf_token %}
+				<div class="row">
+					<div class=" col-md-12 ">
+					<select id="sort" name="sort" >
+					<option value="">--select--</option>
+						{% for i in data %}
+							<option value="{{i.id}}">{{i.catagory}}</option>
+						{% endfor %}
+
+			
+                        		<div class=" col-md-12 ">
+                                		<input class="form-control" placeholder="Enter the amount" type="text" name='price' id='price'/>
+					</div>
+					<br>
+					<div  class=" col-md-12 ">
+						<button class="send" onclick="return validation()" >Submit</button>
+					</div>
+					</div>
+				</div>
+			</div>
+			</form>
+			</div>
+		</div>
+	</div>
+</div>
+		
+{% endblock %}

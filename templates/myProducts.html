@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="product-bg">
+	<div class="product-bg-white">
+	<div class="container">
+		<div class="row">
+	{% for i in data %}
+		<div class="col-xl-3 col-lg-3 col-md-6 col-sm-12">
+                <div class="product-box">
+			<i><img src="{{i.file.url}}" height="100px" width="100px"></i>
+                    	<h3>{{i.product}}</h3>
+                    	<span>{{i.price}}</span>
+		    	<h3>{{i.catagory.catagory}}</h3>
+			<h3>{{i.stock}}</h3>
+			<h3>{{i.details}}</h3>
+			<h3><a class="send" href={% url 'delete' i.id %}>Delete</a></h3>
+			<h3><a class="send" href={% url 'update' i.id %}>update</a></h3>
+                </div>
+		</div>
+	{% endfor %}
+               
+	</div>
+	</div>
+        </div>
+</div>
+	
+{% endblock %}

@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="product-bg">
+	<div class="product-bg-white">
+		<div class="container">
+			<div class="row">
+			{% for i in data %}
+			<div class="col-xl-3 col-lg-3 col-md-6 col-sm-12">
+                  	<div class="product-box">
+			Name
+			<span>{{i.name}}</span>
+			<br><br>
+			Gender
+			<span>{{i.gender}}</span>
+			<br><br>
+			Address
+			<span>{{i.address}}</span>
+			<br><br>
+			Country
+			<span>{{i.country}}</span>
+			<br><br>
+			Phone
+			<span>{{i.phone}}</span>
+			<br><br>
+			Username
+			<span>{{i.username}}</span>
+			<br><br>
+			Status</span>
+			<span>{{i.status}}</span>
+			<br><br>
+			<h3><a class="send" href={% url 'approve' i.id %}>approve</a></h3>
+			<h3><a class="send" href={% url 'deny' i.id %}>deny</a></h3>
+			<h3><a class="send" href={% url 'deleteUser' i.id %}>delete</a></h3>
+			</div>
+			</div>
+			{% endfor %}
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}

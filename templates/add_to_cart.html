@@ -1,0 +1,116 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+
+
+<script type="text/javascript">
+		function validation()
+		{
+			var alpha=/^[a-zA-Z]+$/;
+			var num=/^[0-9]+$/;
+			var psw=/^[a-zA-Z-0-9]+$/;
+
+			var address=document.getElementById("address")
+			var contact=document.getElementById("contact")
+			var quantity=document.getElementById("quantity")
+			
+			if (address.value.length ==0)
+			{
+				alert("Enter the address");
+				address.focus();
+				return false;
+			}
+			else if(!address.value.match(alpha))
+			{
+				alert("Ivalid address");
+				address.focus();
+				return false;
+			}
+			else if (contact.value.length ==0)
+			{
+				alert("Enter contact details");
+				contact.focus();
+				return false;
+			}
+			else if(!contact.value.match(alpha))
+			{
+				alert("Invalid contact details");
+				contact.focus();
+				return false;
+			}
+			else if (quantity.value.length == 0)
+			{
+				alert("Enter the Quantity");
+				quantity.focus();
+				return false;
+			}
+			else if(!quantity.value.match(num))
+			{
+				alert("Invalid entry");
+				quantity.focus();
+				return false;
+			}
+			else
+			{
+				return true;
+			}
+		}
+</script>
+
+	<script src="/static/jquery.min.js"></script>
+	<script>
+	$(document).ready(function(){
+	$("#quantity").change(function(){
+		quantity=$(this).val();
+		price=$("#price").val();
+		total=parseInt(quantity)*parseInt(price);
+		$("#total").val(total);
+		});
+	});
+	</script>
+	<div class="contact">
+        	<div class="container">
+			<div class="row">
+				<div class="col-md-12">
+				<form method="post" action="{% url 'add_to_cart_action' %}">
+				{% csrf_token %}
+				{% for i in data %}
+				<input type="hidden" name="uid" id="uid" value="{{i.id}}"/>
+				<input type="hidden" name="price" id="price" value="{{i.price}}"/>
+				
+				<div class="row">
+                        	<div class=" col-md-12 ">
+                                	<input class="form-control" value="{{i.product}}" readonly="true">
+				</div>
+				<div class=" col-md-12 ">
+                                	<input class="form-control" value="{{i.details}}" readonly="true">
+				</div>
+				<div class=" col-md-12 ">
+                                	<input class="textarea" placeholder="Address" type="text" name="address" id="address"/>
+				</div>
+				<div class= "col-md-12">
+				<input class="form-control" placeholder="contact" name="contact" id="contact"/>
+				</div>
+				<div class= "col-md-12">
+				<input class="form-control" placeholder="quantity" name="quantity" id="quantity"/>
+				</div>
+				<div class= "col-md-12">
+				<input class="form-control" name="total" id="total" readonly="true"/>
+				</div>
+				<div class= " col-md-12 ">
+					<button class="send" onclick="return validation()">Submit</button>
+				</div>
+				{% endfor %}
+				</form>
+
+
+			</div>
+		</div>
+	</div>	
+			
+{% if msg  %}
+	<script>alert('{{msg}}')</script>
+{% endif %}			
+
+{% endblock %}

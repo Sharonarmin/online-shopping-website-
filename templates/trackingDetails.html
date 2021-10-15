@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<script type="text/javascript">
+	function validation()
+		{
+			var alpha=/^[a-zA-Z0-9]+$/;
+			
+
+			var place=document.getElementById("place");
+
+			if (place.value.length ==0)
+			{
+				alert("enter the place");
+				place.focus();
+				return false;
+			}
+			else if(!place.value.match(alpha))
+			{
+				alert("Invalid entry");
+				place.focus();
+				return false;
+			}
+			else
+			{
+				return true;
+			}
+		}
+</script>
+
+<div class="product-bg">
+	<div class="product-bg-white">
+	<div class="container">
+		<div class="row">
+		<form method="post" action="{% url 'trackingDetailsfun' %}">
+		{% csrf_token %}
+		{% for i in data %}
+			<input type="hidden" name="uid" id="uid" value="{{i.id}}"/>
+			<input type="hidden" name="product" id="product"/>
+				<h3>Tracking Details</h3>
+				<h3><input type="text" id="place" name="place"/></h3>	
+				<br>
+				<button class="send" onclick="return validation()">Submit</button>
+
+		{% endfor %}
+		</form>
+		</div>
+	</div>
+	</div>
+</div>
+{% endblock %}

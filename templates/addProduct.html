@@ -1,0 +1,127 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+
+<script >
+		function validation()
+		{	
+			
+			var alpha=/^[a-zA-Z]+$/;
+			var num=/^[0-9]+$/;
+			
+			var product=document.getElementById("product");
+			var details=document.getElementById("details");
+			var catagory=document.getElementById("catagory");
+			var file=document.getElementById("fileUpload");
+			var stock=document.getElementById("stock");
+			var price=document.getElementById("price");
+
+			if (product.value.length ==0)
+			{
+				alert("enter the product");
+				product.focus();
+				return false;
+			}
+			else if(details.value.length ==0)
+			{
+				alert("enter the details");
+				details.focus();
+				return false;
+			}
+			else if(catagory.value.length == 0)
+			{
+				alert("select the catagory");
+				catagory.focus();
+				return false;
+			}
+			else if(file.value.length ==0)
+			{
+				alert("select the file");
+				file.focus();
+				return false;
+			}
+			else if(stock.value.length ==0)
+			{
+				alert("enter the stock");
+				stock.focus();
+				return false;
+			}
+			else if(!stock.value.match(num))
+			{
+				alert("enter the stock number");
+				stock.focus();
+				return false;
+			}
+			else if(price.value.length == 0)
+			{
+				alert("Enter the price")
+				price.focus();
+				return false;
+			}
+			else if(!price.value.match(num))
+			{
+				alert("invalid entry");
+				price.focus();
+				return false;
+			}
+			else
+			{
+				return true;
+			}
+		}
+</script>
+			
+
+
+<div class="contact">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+			<form method="post" action="{% url 'addProductAction' %}" enctype="multipart/form-data">
+			{% csrf_token %}
+			<div class="row">
+                        	<div class=" col-md-12 ">
+                                	<input class="form-control"  type="file" name='fileUpload' id='fileUpload'>
+				</div>
+				<div class=" col-md-12 ">
+                                	<input class="form-control"  placeholder="Product" type="text" name='product' id='product'>
+				</div>
+				<div class=" col-md-12 ">
+                                	<input class="form-control" placeholder="Details" type="text" name='details' id='details'>
+				</div>
+				<div class=" col-md-12 ">
+				<div class="country">
+				Catagory
+                                	<select class="form-control" name="catagory" id="catagory">
+						<option value="">--select--</option>
+						{% for i in data %}
+							<option value="{{i.id}}">{{i.catagory}}</option>
+						{% endfor %}
+					</select>
+				</div>
+				</div>
+				<div class=" col-md-12 ">
+                                	<input class="form-control" placeholder="stock" type="text" name='stock' id='stock'>
+				</div>
+				<div class=" col-md-12 ">
+                                	<input class="form-control" placeholder="price" type="text" name='price' id='price'>
+				</div>
+				<div class= " col-md-12 ">
+					<button type="submit" class="send" onclick="return validation()" >Submit</button>
+				</div>
+				
+			
+			</div>
+			
+			</form>
+			</div>
+		</div>
+	</div>
+</div>
+<br>
+
+{% if msg %}
+	<script>alert('{{msg}}')</script>
+{% endif %}
+{% endblock %}

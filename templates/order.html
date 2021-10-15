@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block content %}
+	<div class="product-bg">
+	<div class="product-bg-white">
+	<div class="container">
+	<div class="row">
+
+		{% for i in data %}
+			<div class="col-xl-3 col-lg-3 col-md-6 col-sm-12">
+			<div class="product-box">
+                     	<h3>{{i.productproduct}}</h3>
+			<br>
+                     	<span>{{i.address}}</span>
+			<br>
+			<span>{{i.contact}}</span>
+			<br>
+			<span>{{i.quantity}}</span>
+			<br>
+			<span>{{i.total}}</span>
+			<br>
+			<span>{{i.status}}</span>
+			<h3 class="send"><a href={% url 'cancelOrder' i.id %}>Cancel</a></h3>
+		     	{% if i.status == 'approved' %}
+				<h3  class="send newcolor"><a  href={% url 'buyerTrackingDetails' i.id %}>Tracking Details</a></h3>
+			{% endif %}
+                 	</div>
+               		</div>
+		{% endfor %}
+
+
+{% endblock %}

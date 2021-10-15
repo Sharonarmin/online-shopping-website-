@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+
+<div class="product-bg">
+	<div class="product-bg-white">
+		<div class="container">
+			<div class="row">
+				{% for i in data %}
+					<div class="col-xl-3 col-lg-3 col-md-6 col-sm-12">
+                  				<div class="product-box">
+							<span>Product   </span>
+							<h5>{{i.product.product.product}}</h5>
+							<br>
+							<span>Place   </span>
+							<h5>{{i.place}}</h5>
+							<br>
+							<span>Date   <span>
+							<h5>{{i.date}}</h5>
+							<br>
+							<span>Time   </span>
+							<h5>{{i.time}}</h5>
+						</div>
+					</div>
+		
+				{% endfor %}
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}	
